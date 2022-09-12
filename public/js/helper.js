@@ -9,9 +9,9 @@ function ajaxForm(formItems) {
 
 
 /**
- * 
+ *
  * @param {*} url route
- * @param {*} method POST or GET 
+ * @param {*} method POST or GET
  * @param {*} functionsOnSuccess Array of functions that should be called after ajax
  * @param {*} form for POST request
  */
@@ -38,22 +38,23 @@ function ajax(url, method, functionsOnSuccess, form) {
     processData: false,
     contentType: false,
     dataType: 'json',
-    error: function(xhr, textStatus, error) {
-      console.log(xhr.responseText);
-      console.log(xhr.statusText);
-      console.log(textStatus);
-      console.log(error);
+    beforeSend: function(){
+        $('#skeleton').removeClass('d-none');
+        $('#content').addClass('d-none');
     },
+
     success: function(response) {
-      for (var j = 0; j < functionsOnSuccess.length; j++) {
-        for (var i = 0; i < functionsOnSuccess[j][1].length; i++) {
-          if (functionsOnSuccess[j][1][i] == "response") {
-            functionsOnSuccess[j][1][i] = response;
-          }
-        }
-        functionsOnSuccess[j][0].apply(this, functionsOnSuccess[j][1]);
-      }
-    }
+        $('#'+response.btn_name).html(response.text+' ('+response.count+')');
+        $('#skeleton').addClass('d-none');
+        $('#content').html(response.users);
+        $('#content').removeClass('d-none');
+    },
+    error: function(xhr, textStatus, error) {
+        console.log(xhr.responseText);
+        console.log(xhr.statusText);
+        console.log(textStatus);
+        console.log(error);
+      },
   });
 }
 
@@ -70,7 +71,7 @@ function exampleUseOfAjaxFunction(exampleVariable) {
     [exampleOnSuccessFunction, [exampleVariable, 'response']]
   ];
 
-  // POST 
+  // POST
   ajax('/example_route', 'POST', functionsOnSuccess, form);
 
   // GET
@@ -85,3 +86,53 @@ function exampleOnSuccessFunction(exampleVariable, response) {
   console.table(response);
   $('#content').html(response['content']);
 }
+
+
+function ajaxRequest(url, method, userId){
+      $.ajax({
+        url: url,
+        type: method,
+        async: true,
+        data: userId,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        beforeSend: function(){
+
+        },
+        success: function(response) {
+         hideRow(userId);
+        },
+      });
+}
+function hideRow(userId){
+     $('.row_'+userId).parent('.shadow').addClass('d-none');
+}
+function ajaxGetConnectionsInCommon(url, method, userId){
+      $.ajax({
+        url: url,
+        type: method,
+        async: true,
+        data: userId,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        beforeSend: function(){
+
+        },
+        success: function(response) {
+            $('#'+response.btn_name).html(response.text+' ('+response.count+')');
+            $('#content').html(response.users);
+        },
+      });
+}
+
+// $(document).ready(function(e) {
+//     var limit = 2;
+//     $(".table1 li").slice(0, limit).show();
+//     $(document).on('click','#load_more_btn',function(e){
+//     limit += 5;
+//     e.preventDefault();
+//     $(".table1 li").slice(0, limit).show();
+//     });
+// });

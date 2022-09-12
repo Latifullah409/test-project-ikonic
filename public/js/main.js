@@ -3,9 +3,9 @@ var contentId = 'content';
 var skipCounter = 0;
 var takeAmount = 10;
 
-
+//common route for all get data
 function getRequests(mode) {
-  // your code here...
+    ajax('get-user-data/'+mode, 'GET', undefined);
 }
 
 function getMoreRequests(mode) {
@@ -22,8 +22,9 @@ function getMoreConnections() {
   // your code here...
 }
 
-function getConnectionsInCommon(userId, connectionId) {
-  // your code here...
+//get common connections
+function getConnectionsInCommon(url,method,userId) {
+   ajaxGetConnectionsInCommon(url,method,userId);
 }
 
 function getMoreConnectionsInCommon(userId, connectionId) {
@@ -32,7 +33,8 @@ function getMoreConnectionsInCommon(userId, connectionId) {
 }
 
 function getSuggestions() {
-  // your code here...
+    var val = 'suggestion';
+    ajax('get-user-data/'+val, 'GET', undefined);
 }
 
 function getMoreSuggestions() {
@@ -40,8 +42,8 @@ function getMoreSuggestions() {
   // your code here...
 }
 
-function sendRequest(userId, suggestionId) {
-  // your code here...
+function sendRequest(url,method,userId) {
+    ajaxRequest(url, method, userId);
 }
 
 function deleteRequest(userId, requestId) {
@@ -57,5 +59,65 @@ function removeConnection(userId, connectionId) {
 }
 
 $(function () {
-  //getSuggestions();
+  //to get suggestions
+  getSuggestions();
+  $('#get_suggestions_btn').on('click',function(){
+    getSuggestions();
+  });
+
+  //to get send requests
+  $('#get_sent_requests_btn').on('click',function(){
+    getRequests('sent');
+  });
+
+  //to get received requests
+  $('#get_received_requests_btn').on('click',function(){
+    getRequests('receive');
+  });
+
+  //to get connections
+  $('#get_connections_btn').on('click',function(){
+    getRequests('connection');
+  });
+
+  //to get common connections
+  $(document).on('click', '#get_connections_in_common', function(){
+    var method = "GET";
+    var userId = $(this).data('id');
+    var url = 'common-connection/'+userId;
+    getConnectionsInCommon(url,method,userId);
+  });
+
+  //sent request
+  $(document).on('click', '.create_request_btn', function(){
+    var method = "GET";
+    var suggestionId = $(this).data('id');
+    var url = 'sent-request/'+suggestionId;
+    sendRequest(url,method,suggestionId);
+  });
+
+  //cancel request
+  $(document).on('click', '.cancel_request_btn', function(){
+    var method = "GET";
+    var userId = $(this).data('id');
+    var url = 'cancel-request/'+userId;
+    sendRequest(url,method,userId);
+  });
+
+  //cancel request
+  $(document).on('click', '.accept_request_btn', function(){
+    var method = "GET";
+    var userId = $(this).data('id');
+    var url = 'accept-request/'+userId;
+    sendRequest(url,method,userId);
+  });
+
+  //remove connection
+  $(document).on('click', '.remove_connection_btn', function(){
+    var method = "GET";
+    var userId = $(this).data('id');
+    var url = 'remove-connection/'+userId;
+    sendRequest(url,method,userId);
+  });
+
 });

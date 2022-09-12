@@ -1,17 +1,17 @@
 <div class="my-2 shadow text-white bg-dark p-1" id="">
   <div class="d-flex justify-content-between">
     <table class="ms-1">
-      <td class="align-middle">Name</td>
+      <td class="align-middle">{{ $connection->name }}</td>
       <td class="align-middle"> - </td>
-      <td class="align-middle">Email</td>
+      <td class="align-middle">{{ $connection->email }}</td>
       <td class="align-middle">
     </table>
     <div>
-      <button style="width: 220px" id="get_connections_in_common_" class="btn btn-primary" type="button"
+      <button style="width: 220px" id="get_connections_in_common" data-id="{{@$connection->id}}" class="btn btn-primary" type="button"
         data-bs-toggle="collapse" data-bs-target="#collapse_" aria-expanded="false" aria-controls="collapseExample">
         Connections in common ()
       </button>
-      <button id="create_request_btn_" class="btn btn-danger me-1">Remove Connection</button>
+      <button id="remove_connection_btn" data-id="{{@$connection->id}}" class="btn btn-danger me-1 remove_connection_btn">Remove Connection</button>
     </div>
 
   </div>
