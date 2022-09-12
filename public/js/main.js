@@ -5,6 +5,7 @@ var takeAmount = 10;
 
 //common route for all get data
 function getRequests(mode) {
+    $("#load_more_btn_parent").text("Load More");
     ajax('get-user-data/'+mode, 'GET', undefined);
 }
 
@@ -118,6 +119,16 @@ $(function () {
     var userId = $(this).data('id');
     var url = 'remove-connection/'+userId;
     sendRequest(url,method,userId);
+  });
+
+  //load more
+  $(document).on('click', '#load_more_btn_parent', function(e){
+    e.preventDefault();
+    $(".shadow_tr:hidden").slice(0,3).fadeIn("slow");
+
+    if($(".shadow_tr:hidden").length == 0){
+        $("#load_more_btn_parent").text("No more data !!!");
+    }
   });
 
 });

@@ -28,9 +28,9 @@
             @endfor
           </div>
 
-
-          <div class="d-flex justify-content-center mt-2 py-3 {{-- d-none --}}" id="load_more_btn_parent">
-            <button class="btn btn-primary" onclick="" id="load_more_btn">Load more </button>
+          <input type="hidden" class="more_btn" value="suggesstions">
+          <div class="d-flex justify-content-center mt-2 py-3 {{-- d-none --}}" id="">
+            <button class="btn btn-primary" onclick="" id="load_more_btn_parent">Load more </button>
           </div>
         </div>
       </div>

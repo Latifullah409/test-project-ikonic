@@ -44,10 +44,13 @@ function ajax(url, method, functionsOnSuccess, form) {
     },
 
     success: function(response) {
+        $('.more_btn').val(response.type);
         $('#'+response.btn_name).html(response.text+' ('+response.count+')');
         $('#skeleton').addClass('d-none');
         $('#content').html(response.users);
         $('#content').removeClass('d-none');
+
+        $(".shadow_tr").slice(0,9).show();
     },
     error: function(xhr, textStatus, error) {
         console.log(xhr.responseText);
@@ -101,13 +104,13 @@ function ajaxRequest(url, method, userId){
 
         },
         success: function(response) {
-         hideRow(userId);
+            if(response.success){
+                $('#row_'+response.row_id).remove();
+            }
         },
       });
 }
-function hideRow(userId){
-     $('.row_'+userId).parent('.shadow').addClass('d-none');
-}
+
 function ajaxGetConnectionsInCommon(url, method, userId){
       $.ajax({
         url: url,
@@ -121,18 +124,14 @@ function ajaxGetConnectionsInCommon(url, method, userId){
 
         },
         success: function(response) {
-            $('#'+response.btn_name).html(response.text+' ('+response.count+')');
-            $('#content').html(response.users);
+            if(response.success){
+                $('#content_'+response.row_id).html(response.users);
+                $('#get_connections_in_common').html(response.text+' ('+response.count+')');
+            }
+
+            // $('#'+response.btn_name).html(response.text+' ('+response.count+')');
+            // $('#content').html(response.users);
         },
       });
 }
 
-// $(document).ready(function(e) {
-//     var limit = 2;
-//     $(".table1 li").slice(0, limit).show();
-//     $(document).on('click','#load_more_btn',function(e){
-//     limit += 5;
-//     e.preventDefault();
-//     $(".table1 li").slice(0, limit).show();
-//     });
-// });

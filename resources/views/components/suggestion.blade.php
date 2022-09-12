@@ -1,4 +1,4 @@
-<div class="my-2 shadow  text-white bg-dark p-1" >
+<div class="my-2 shadow shadow_tr text-white bg-dark p-1" id="row_{{@$sug->id}}">
   <div class="d-flex justify-content-between" id="">
     <table class="ms-1">
         <tr>
